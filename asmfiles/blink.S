@@ -16,7 +16,7 @@
 .equ GPIOC_CHR,     0x40011004  @ These numbers are adresses of
 .equ RCC_APB2ENR,   0x40021018  @ registers, that we will need
 
-.equ LOOP_COMPARE,  0xfffff     @ How many times should wait: be called
+.equ LOOP_COMPARE,  0xaffff     @ How many times should wait: be called
                                 @ before changing the LED state?
 
 

@@ -3,14 +3,25 @@ BUILD_DIR = bin
 
 SHARED_DIR = ../asmfiles
 
+
+
 CFILES = main.c
 #CFILES += api.c
-AFILES += blink.S
+
+#AFILES += blink.S
+AFILES += simple1.S
 
 
 
+
+#DEBUG THIS BREAKS IT (COMPILES BUT DOES NOT RUN)
+#DEVICE=stm32f1
+
+#this will work and run fine (AFAIK)
 DEVICE=stm32f103c8
-#OOCD_FILE = board/stm32f4discovery.cfg
+
+OOCD_INTERFACE=/usr/share/openocd/scripts/interface/stlink.cfg
+OOCD_TARGET=/usr/share/openocd/scripts/target/stm32f1x.cfg
 
 
 

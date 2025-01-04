@@ -1,0 +1,83 @@
+
+#########################################
+# assemble pure gcc (linux)
+
+
+DEBUG - LOOK INTO arm-none-eabi-as VS arm-linux-gnueabi-as ????
+
+
+
+
+#on a 64 bit linux box 
+arm-none-eabi-as hello.s -o hello.o
+arm-none-eabi-gcc hello.o -o hello.elf -nostdlib
+
+
+#on a raspberry pi 
+as hello.asm -o hello.o
+gcc hello.o -o hello.elf -nostdlib
+
+
+
+
+
+
+
+#########################################
+# GDB SETUP 
+
+// https://sourceware.org/gdb/current/onlinedocs/gdb.html/Command-History.html
+
+
+ set history save
+
+
+#########################################
+#ASM COMMANDS 
+
+mov r0, 0x10
+mov r1, rcc
+
+str r0, [r1,0x18]
+
+rev r0, r0
+
+bx lr
+
+
+# load to r2 RCC_APB2ENR address
+ldr r2, = #RCC_APB2ENR   
+
+
+#########################################
+# SETUP  
+
+# Dont forget to update firmware on the programmer.
+
+#show any st-link hardware 
+st-info --probe
+
+# You may need to verify chip ID and fix in openocd target  - I set mine to "0" to accept any chip 
+
+# openocd may only work after a "st-flash erase" operation 
+openocd -f /usr/share/openocd/scripts/interface/stlink.cfg -f /usr/share/openocd/scripts/target/stm32f1x.cfg
+
+
+
+
+#########################################
+# RUNNING GDB 
+
+# to run the debugger locally once the previous command executes 
+gdb-multiarch ./asmtest.elf 
+
+
+(gdb) target extended-remote localhost:3333
+(gbd) lay next 
+(gbd) break main 
+(gbd) c 
+#     c is continue 
+
+
+ 
+
